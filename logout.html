@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout Example</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-image: url('background.jpg'); /* Replace with your background image */
+            background-size: cover;
+            background-position: center;
+            color:#fff;
+            text-align: center;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 30px;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
+        }
+
+        .logout-message {
+            font-size: 18px;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+        }
+
+        button {
+            padding: 15px 25px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px); /* Lift effect */
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Welcome to Your Dashboard</h2>
+    <p class="logout-message">Are you sure you want to logout?</p>
+    <button onclick="logout()">Logout</button>
+
+    <script>
+        // Function to log out the user
+        function logout() {
+            // Clear user session from local storage
+            localStorage.removeItem('userSession'); // Assuming you stored session data in localStorage
+           
+            // Optionally, redirect to login page or home page after logging out
+            window.location.href = 'login.html'; // Change this to your login page URL
+        }
+    </script>
+
+</body>
+
+</html>
+

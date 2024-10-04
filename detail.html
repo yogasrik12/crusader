@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Truck Details</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #f0f0f0; /* Light text color for visibility */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full height */
+            text-align: center;
+        }
+
+        .detail-box {
+            background-color: rgba(0, 0, 0, 0.8); /* Darker semi-transparent background */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 500px; /* Max width for larger screens */
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .field {
+            margin: 15px 0;
+        }
+
+        .label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        button {
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF; /* Primary button color */
+            color: white;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Darker shade on hover */
+            transform: translateY(-2px); /* Lift effect on hover */
+        }
+
+        button:active {
+            transform: translateY(0); /* Reset on click */
+        }
+    </style>
+</head>
+<body>
+
+<div class="detail-box">
+    <h2>Truck Journey Details</h2>
+    <div class="field">
+        <span class="label">Starting Place:</span>
+        <input type="text" id="start-place" placeholder="Enter starting place" />
+    </div>
+    <div class="field">
+        <span class="label">Ending Place:</span>
+        <input type="text" id="end-place" placeholder="Enter ending place" />
+    </div>
+    <div class="field">
+        <span class="label">Driver Name:</span>
+        <input type="text" id="driver-name" placeholder="Enter driver's name" />
+    </div>
+    <div class="field">
+        <span class="label">Load Details:</span>
+        <input type="text" id="load-details" placeholder="Enter load details" />
+    </div>
+    <div class="field">
+        <span class="label">Truck Number Plate:</span>
+        <input type="text" id="truck-number" placeholder="Enter truck number plate" />
+    </div>
+
+    <div class="button-container">
+        <button onclick="saveDetails()">Save Details</button>
+        <button onclick="goBack()">Back to Menu</button>
+        <button onclick="goToNext()">Next</button>
+    </div>
+</div>
+
+<script>
+    function saveDetails() {
+        const startPlace = document.getElementById('start-place').value;
+        const endPlace = document.getElementById('end-place').value;
+        const driverName = document.getElementById('driver-name').value;
+        const loadDetails = document.getElementById('load-details').value;
+        const truckNumber = document.getElementById('truck-number').value;
+
+        // Logic to save details can go here
+        console.log('Truck Details Saved:', {
+            startPlace,
+            endPlace,
+            driverName,
+            loadDetails,
+            truckNumber
+        });
+
+        // You can add functionality to save to a server or database
+        alert('Truck details saved successfully!');
+    }
+
+    function goBack() {
+        // Logic to navigate back to the menu page
+        window.location.href = 'menu.html'; // Replace with your menu page
+    }
+
+    function goToNext() {
+        // Logic to navigate to the next page
+        window.location.href = 'menu.html'; // Replace with your desired next page
+    }
+</script>
+
+</body>
+</html>

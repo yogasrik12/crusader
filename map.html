@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Truck Management System - Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #map {
+            height: 500px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .truck-icon, .breakdown-icon, .traveling-truck-icon, .nearby-vehicle-icon {
+            font-size: 30px;
+        }
+        .button-container {
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            margin-right: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Truck Management System - Fleet Tracker</h1>
+    
+    <!-- Map Section -->
+    <div id="map"></div>
+
+    <!-- Button Section -->
+    <div class="button-container">
+        <button onclick="goBack()">Back to Menu</button>
+    </div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        let map;
+        let truckMarker;
+        let travelingTruckMarker;
+        let nearbyMarkers = []; // Store nearby vehicle markers
+        let routeCoords = [
+            [13.0827, 80.2707],  // Chennai
+            [11.0168, 76.9558],  // Coimbatore
+            [9.9252, 78.1198],   // Madurai
+            [10.7905, 78.7047],  // Tiruchirappalli
+            [11.6643, 78.1460],  // Salem
+            [10.9916, 76.9524]   // Erode
+        ];
+        let nearbyVehicles = [
+            [12.1357, 78.1583],  // Dharmapuri
+            [10.0104, 77.4774],  // Theni
+            [10.6585, 77.0082],  // Pollachi
+            [12.8342, 79.7036],  // Kanchipuram
+            [11.1085, 77.3411],  // Tiruppur
+            [8.9567, 77.3153],   // Tenkasi
+            [10.9601, 79.3790]   // Kumbakonam
+        ];
+
+        let routeIndex = 0;
+
+        const truckIcon = L.divIcon({
+            className: 'truck-icon',
+            html: '🚚',
+            iconSize: [30, 30],
+            iconAnchor: [15, 30],
+            popupAnchor: [0, -30]
+        });
+
+        const breakdownIcon = L.divIcon({
+            className: 'breakdown-icon',
+            html: '🚧',
+            iconSize: [30, 30],
+            iconAnchor: [15, 30],
+            popupAnchor: [0, -30]
+        });
+
+        const travelingTruckIcon = L.divIcon({
+            className: 'traveling-truck-icon',
+            html: '🚛',
+            iconSize: [30, 30],
+            iconAnchor: [15, 30],
+            popupAnchor: [0, -30]
+        });
+
+        const nearbyVehicleIcon = L.divIcon({
+            className: 'nearby-vehicle-icon',
+            html: '🚚',
+            iconSize: [30, 30],
+            iconAnchor: [15, 30],
+            popupAnchor: [0, -30]
+        });
+
+        function initMap() {
+            map = L.map('map').setView(routeCoords[0], 6);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
+
+            truckMarker = L.marker(routeCoords[0], { icon: truckIcon }).addTo(map)
+                .bindPopup("Truck (In Transit)")
+                .openPopup();
+
+            travelingTruckMarker = L.marker(routeCoords[0], { icon: travelingTruckIcon }).addTo(map)
+                .bindPopup("Traveling Truck")
+                .openPopup();
+
+            moveTruck();
+        }
+
+        function moveTruck() {
+            routeIndex = 0;
+            let interval = setInterval(() => {
+                if (routeIndex < routeCoords.length - 1) {
+                    routeIndex++;
+                    if (Math.random() < 0.2) {  // Simulate breakdown
+                        truckMarker.setIcon(breakdownIcon);
+                        truckMarker.setPopupContent("Truck Breakdown! Nearby vehicles are available.").openPopup();
+                        showNearbyVehicles();
+
+                        clearInterval(interval); // Stop the main truck
+                        return;
+                    }
+
+                    // Move truck markers
+                    truckMarker.setLatLng(routeCoords[routeIndex]);
+                    travelingTruckMarker.setLatLng(routeCoords[routeIndex]);
+
+                    // Update map view
+                    map.setView(routeCoords[routeIndex], 6);
+                } else {
+                    clearInterval(interval);
+                }
+            }, 2000);
+        }
+
+        function showNearbyVehicles() {
+            nearbyMarkers.forEach(marker => map.removeLayer(marker)); // Clear previous markers
+            nearbyMarkers = []; // Reset the markers array
+
+            nearbyVehicles.forEach(vehicleCoords => {
+                let marker = L.marker(vehicleCoords, { icon: nearbyVehicleIcon }).addTo(map)
+                    .bindPopup("Nearby Vehicle Available")
+                    .openPopup();
+                nearbyMarkers.push(marker);
+            });
+        }
+
+        function goBack() {
+            // Logic to navigate back to the menu page
+            window.location.href = 'menu.html'; // Replace with your menu page
+        }
+
+        window.onload = initMap; // Initialize map on window load
+    </script>
+</body>
+</html>
